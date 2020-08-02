@@ -4,7 +4,7 @@ require './lib/translator'
 
 class TranslatorTest < Minitest::Test
   def setup
-    @translator = Translator.new
+    @translator = Translator.new('message.txt', 'braille.txt')
   end
 
   def test_it_exists
