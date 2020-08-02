@@ -6,6 +6,11 @@ class Translator
     @output_path = "./data/#{output_file}"
   end
 
+  def translate
+    input = File.read(@input_path)
+    File.write(@output_path, input)
+  end
+
   def message
     "Created '#{@output}' containing #{File.open(@input_path).size} characters"
   end
