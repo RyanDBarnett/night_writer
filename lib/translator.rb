@@ -1,9 +1,10 @@
 class Translator
-  def initialize()
-
+  def initialize(input_file, output_file)
+    @input = input_file
+    @output = output_file
   end
 
   def message
-    "Created 'braille.txt' containing 256 characters"
+    "Created '#{@output}' containing 256 characters"
   end
 end
