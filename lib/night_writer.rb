@@ -1,7 +1,7 @@
 require './lib/dictionary'
 require './lib/file_reader'
 require './lib/file_writer'
-require 'pry';
+require 'pry'
 
 class NightWriter
   attr_reader :reader, :writer
@@ -33,23 +33,23 @@ class NightWriter
 
   def braille_char_sets_line_generator(char_sets)
     result = ''
-    line_char_sets = char_sets.slice!(0...40)
     while char_sets.length > 0
-      result << generate_line(line_char_sets)
       line_char_sets = char_sets.slice!(0...40)
+      result << generate_line(line_char_sets)
     end
     result
   end
 
   def generate_line(char_sets)
-    line = ''
+    braille_line = ''
     (0..2).each do |index|
-      line << char_sets.reduce("") do |line, char_set|
+      line = char_sets.reduce("") do |line, char_set|
         line << char_set[index]
         line
-      end + "\n"
+      end
+      braille_line << line + "\n"
     end
-    line
+    braille_line
   end
 
   def message
