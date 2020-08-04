@@ -11,8 +11,19 @@ class FileReaderTest < Minitest::Test
     assert_instance_of FileReader, @file_reader
   end
 
+  def test_attributes
+    assert_equal '', @file_reader.filename
+    assert_equal '', @file_reader.path
+    mock
+    @file_reader.stubs(:ARGV).returns(['small_message.txt'])
+    @file_reader.read
+
+    assert_equal 'small_message.txt', @file_reader.filename
+    assert_equal "./data/small_message.txt", @file_reader.path
+  end
+
   def test_read
     ARGV[0] = 'small_message.txt'
-    assert_equal 'Hello world!', @file_reader.read
+    assert_equal 'hello world!', @file_reader.read
   end
 end
