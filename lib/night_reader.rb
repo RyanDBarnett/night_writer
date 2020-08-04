@@ -12,29 +12,39 @@ class NightReader
     @dictionary = Dictionary.new
   end
 
-  def encode_file_to_english
+  def decode_file_to_english
     braille = @reader.read
-    english = encode_to_english(braille)
+    english = decode_to_english(braille)
     @writer.write(english)
     puts message
   end
 
-  def encode_to_english(braille)
-    result = []
-    if braille.length < 80
-      lines = braille.split("").each_slice(braille.length / 3)
-      result = lines.reduce([]) do |char_sets, line|
+  def decode_to_english(braille)
+    char_sets = braille_to_char_sets(braille)
+    braille_char_sets_to_string(char_sets)
+  end
+
+  def braille_to_char_sets(braille)
+    char_sets = []
+    while braille.length > 0 do
+      line = braille.slice!(0...80)
+      braille_lines = line.split("").each_slice(line.length / 3)
+      braille_char_sets = braille_lines.reduce([]) do |char_sets, line|
         line.each_slice(2).each_with_index do |char_set, i|
           char_sets[i] = [] if !char_sets[i]
           char_sets[i] << char_set.join('')
         end
         char_sets
       end
+      char_sets.concat(braille_char_sets)
     end
-    result = result.map do |char_set|
+    char_sets
+  end
+
+  def braille_char_sets_to_string(char_sets)
+    char_sets.map do |char_set|
       @dictionary.char_to_braille.invert[char_set]
-    end
-    result.join('')
+    end.join('')
   end
 
   def message
@@ -42,4 +52,4 @@ class NightReader
   end
 end
 
-NightReader.new.encode_file_to_english
+NightReader.new.decode_file_to_english
