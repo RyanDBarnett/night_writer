@@ -1,8 +1,8 @@
 class Dictionary
-  attr_reader :dictionary
+  attr_reader :char_to_braille
 
   def initialize
-    @dictionary = {
+    @char_to_braille = {
       "a" => ["0.", "..", ".."],
       "b" => ["0.", "0.", ".."],
       "c" => ["00", "..", ".."],
@@ -73,6 +73,6 @@ class Dictionary
       "X" => ["..00", "....", ".000"],
       "Y" => ["..00", "...0", ".000"],
       "Z" => ["..0.", "...0", ".000"]
-      }
+    }
   end
 end
