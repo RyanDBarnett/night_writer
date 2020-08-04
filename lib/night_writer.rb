@@ -13,7 +13,7 @@ class NightWriter
   end
 
   def encode_file_to_braille
-    plain = @reader.read
+    plain = @reader.read.downcase
     braille = encode_to_braille(plain)
     @writer.write(braille)
     puts message
@@ -33,22 +33,27 @@ class NightWriter
 
   def braille_char_sets_line_generator(char_sets)
     result = ''
-    (0..2).each do |index|
-      line = generate_line(char_sets, index)
-      result << "#{line}\n"
+    line_char_sets = char_sets.slice!(0...40)
+    while char_sets.length > 0
+      result << generate_line(line_char_sets)
+      line_char_sets = char_sets.slice!(0...40)
     end
     result
   end
 
-  def generate_line(char_sets, index)
-    char_sets.reduce("") do |line, char_set|
-      line << char_set[index]
-      line
+  def generate_line(char_sets)
+    line = ''
+    (0..2).each do |index|
+      line << char_sets.reduce("") do |line, char_set|
+        line << char_set[index]
+        line
+      end + "\n"
     end
+    line
   end
 
   def message
-    "Created '#{writer.filename}' containing 256 characters"
+    "Created '#{writer.filename}' containing #{reader.read.length} characters"
   end
 end
 
