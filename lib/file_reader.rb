@@ -6,7 +6,11 @@ class FileReader
 
   def read
     @path = "./data/#{filename}"
-    return File.read(@path).gsub("\n", "")
+    if File.exist? @path
+      File.read(@path).gsub("\n", "")
+    else
+      ""
+    end
   end
 
   def filename

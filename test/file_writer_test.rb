@@ -4,6 +4,7 @@ require './lib/file_writer'
 
 class FileWriterTest < Minitest::Test
   def setup
+    ARGV[1] = 'braille.txt'
     @file_writer = FileWriter.new
   end
 
@@ -12,11 +13,8 @@ class FileWriterTest < Minitest::Test
   end
 
   def test_attributes
-    assert_equal '', @file_writer.filename
     assert_equal '', @file_writer.path
 
-    require 'pry'; binding.pry
-    @file_writer.stubs(:filename).returns('braille.txt')
     content = 'Test'
     @file_writer.write(content)
 
@@ -28,7 +26,6 @@ class FileWriterTest < Minitest::Test
   end
 
   def test_write
-    @file_writer.stubs(:filename).returns('braille.txt')
     content = 'Test'
     @file_writer.write(content)
     assert_equal true, File.exist?('./data/braille.txt')
