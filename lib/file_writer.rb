@@ -1,7 +1,15 @@
 class FileWriter
+  attr_reader :path
+  def initialize
+    @path = ""
+  end
+
   def write data
-    filename = ARGV[1]
-    output_path = "./data/#{filename}"
-    File.write(output_path, data)
+    @path = "./data/#{filename}"
+    File.write(@path, data)
+  end
+
+  def filename
+    ARGV[1]
   end
 end

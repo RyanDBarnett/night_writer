@@ -1,7 +1,15 @@
 class FileReader
+  attr_reader :path
+  def initialize
+    @path = ""
+  end
+
   def read
-    filename = ARGV[0]
-    input_path = "./data/#{filename}"
-    File.read(input_path).strip
+    @path = "./data/#{filename}"
+    return File.read(@path).strip
+  end
+
+  def filename
+    ARGV[0]
   end
 end
